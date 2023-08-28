@@ -4,17 +4,17 @@ main() {
   runApp(PergutaApp());
 }
 
-class PergutaAppState extends State<PergutaApp> {
-  var selectedQuestion = 0;
+class _PergutaAppState extends State<PergutaApp> {
+  var _selectedQuestion = 0;
 
-  void response() {
+  void _response() {
     setState(() {
-      if (selectedQuestion<1){
-         selectedQuestion++;
+      if (_selectedQuestion<1){
+         _selectedQuestion++;
       }
      
     });
-    print(selectedQuestion);
+    print(_selectedQuestion);
   }
 
   @override
@@ -31,17 +31,17 @@ class PergutaAppState extends State<PergutaApp> {
       ),
       body: Column(
         children: [
-          Text(questions[selectedQuestion]),
+          Text(questions[_selectedQuestion]),
           ElevatedButton(
-            onPressed: response,
+            onPressed: _response,
             child: Text('Answer 1'),
           ),
           ElevatedButton(
-            onPressed: response,
+            onPressed: _response,
             child: Text('Answer 2'),
           ),
           ElevatedButton(
-            onPressed: response,
+            onPressed: _response,
             child: Text('Answer 3'),
           )
         ],
@@ -53,7 +53,7 @@ class PergutaAppState extends State<PergutaApp> {
 class PergutaApp extends StatefulWidget {
   
   @override
-  State<PergutaApp> createState(){
-    return PergutaAppState();
+  _PergutaAppState createState(){
+    return _PergutaAppState();
   }
 }
