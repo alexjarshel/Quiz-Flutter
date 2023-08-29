@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import './questionnaire.dart';
+import './result.dart';
 
 main() {
   runApp(PergutaApp());
@@ -8,49 +8,49 @@ main() {
 
 class _PergutaAppState extends State<PergutaApp> {
   var _selectedQuestion = 0;
+  final _questions = const [
+    {
+      'text': 'What is your favorite collor?',
+      'response': ['blue', 'red', 'green', 'black']
+    },
+    {
+      'text': 'What is your favorite animal?',
+      'response': ['cow', 'lion', 'cat', 'dog']
+    },
+    {
+      'text': 'What is your favorite instrument?',
+      'response': ['drum', 'eletric guitar', 'guitar', 'bass']
+    }
+  ];
 
   void _response() {
     setState(() {
-      if (_selectedQuestion < 0) {
-        _selectedQuestion++;
-      } else if (_selectedQuestion == 1) {
-        _selectedQuestion--;
-      }
+      _selectedQuestion++;
     });
-    print(_selectedQuestion);
+  }
+
+  bool get hasQuestion {
+    return _selectedQuestion < _questions.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> questions = [
-      {
-        'text': 'What is your favorite collor?',
-        'response': ['blue', 'red', 'green', 'black']
-      },
-      {
-        'text': 'What is your favorite animal?',
-        'response': ['cow', 'lion', 'cat', 'dog']
-      },
-      {
-        'text': 'What is your favorite instrument?',
-        'response': ['drum', 'eletric guitar', 'guitar', 'bass']
-      }
-    ];
+    //for(var textResp in choices){
+    //    answers.add(Answer(textResp, _response));
+    //}
 
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
-        title: Text('Questions'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Question(questions[_selectedQuestion]['text'].toString()),
-          Answer('Answer 1', _response),
-          Answer('Answer 2', _response),
-          Answer('Answer 3', _response),
-        ],
-      ),
-    ));
+            appBar: AppBar(
+              title: Text('Questions'),
+            ),
+            body: hasQuestion
+                ? Questionnaire(
+                    questions: _questions,
+                    selectedQuestion: _selectedQuestion,
+                    response: _response,
+                  )
+                : Result()));
   }
 }
 
