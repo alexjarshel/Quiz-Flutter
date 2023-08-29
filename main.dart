@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import './answer.dart';
 
 main() {
   runApp(PergutaApp());
@@ -9,19 +11,30 @@ class _PergutaAppState extends State<PergutaApp> {
 
   void _response() {
     setState(() {
-      if (_selectedQuestion<1){
-         _selectedQuestion++;
+      if (_selectedQuestion < 0) {
+        _selectedQuestion++;
+      } else if (_selectedQuestion == 1) {
+        _selectedQuestion--;
       }
-     
     });
     print(_selectedQuestion);
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<String> questions = [
-      'What is your favorite collor?',
-      'What is your favorite animal?'
+    final List<Map<String, Object>> questions = [
+      {
+        'text': 'What is your favorite collor?',
+        'response': ['blue', 'red', 'green', 'black']
+      },
+      {
+        'text': 'What is your favorite animal?',
+        'response': ['cow', 'lion', 'cat', 'dog']
+      },
+      {
+        'text': 'What is your favorite instrument?',
+        'response': ['drum', 'eletric guitar', 'guitar', 'bass']
+      }
     ];
 
     return MaterialApp(
@@ -30,20 +43,11 @@ class _PergutaAppState extends State<PergutaApp> {
         title: Text('Questions'),
       ),
       body: Column(
-        children: [
-          Text(questions[_selectedQuestion]),
-          ElevatedButton(
-            onPressed: _response,
-            child: Text('Answer 1'),
-          ),
-          ElevatedButton(
-            onPressed: _response,
-            child: Text('Answer 2'),
-          ),
-          ElevatedButton(
-            onPressed: _response,
-            child: Text('Answer 3'),
-          )
+        children: <Widget>[
+          Question(questions[_selectedQuestion]['text'].toString()),
+          Answer('Answer 1', _response),
+          Answer('Answer 2', _response),
+          Answer('Answer 3', _response),
         ],
       ),
     ));
@@ -51,9 +55,8 @@ class _PergutaAppState extends State<PergutaApp> {
 }
 
 class PergutaApp extends StatefulWidget {
-  
   @override
-  _PergutaAppState createState(){
+  _PergutaAppState createState() {
     return _PergutaAppState();
   }
 }
